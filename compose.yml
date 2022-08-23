@@ -1,0 +1,22 @@
+version: "3"
+services:
+  backend:
+    image: node:16
+    working_dir: /usr/src/app
+    env_file:
+      - ./.env
+    entrypoint: /entrypoint.sh
+    ports:
+      - 4000:3000
+    volumes:
+      - ./backend:/usr/src/app
+      - ./entrypoint.sh:/entrypoint.sh
+    command: bash -c 'yarn start:dev'
+  db:
+    image: mysql:8
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: test_db
+      TZ: Asia/Tokyo
